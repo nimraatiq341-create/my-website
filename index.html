@@ -1,80 +1,106 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Legal Helper</title>
+  <title>Advanced AI Legal Helper</title>
   <meta charset="UTF-8">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #eef2f5;
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
       text-align: center;
-      padding: 40px;
+      padding: 30px;
     }
-    #chatbox {
-      width: 420px;
+    #app {
+      width: 500px;
       margin: auto;
-      background: white;
+      background: #1e293b;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
     }
-    h1 { color: #2c3e50; }
-    input {
-      width: 80%;
+    h1 { color: #38bdf8; }
+    textarea {
+      width: 95%;
+      height: 70px;
       padding: 10px;
-      margin-top: 10px;
+      border-radius: 6px;
     }
     button {
-      padding: 10px 15px;
-      background: #2c7be5;
-      color: white;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #38bdf8;
       border: none;
+      color: black;
+      font-weight: bold;
+      border-radius: 6px;
       cursor: pointer;
-      border-radius: 5px;
     }
-    .user { color: #2c7be5; text-align: left; }
-    .ai { color: #27ae60; text-align: left; }
+    #chat {
+      text-align: left;
+      margin-top: 20px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .user { color: #38bdf8; }
+    .ai { color: #4ade80; }
+    .system { color: #facc15; }
   </style>
 </head>
 
 <body>
 
-<h1>AI Legal Helper</h1>
-<p>Ask your legal question below</p>
+<h1>⚖ Advanced AI Legal Helper</h1>
+<p>Educational legal assistant</p>
 
-<div id="chatbox">
-  <div id="messages"></div>
-  <input id="question" placeholder="Type your legal question here">
-  <button onclick="askAI()">Ask</button>
+<div id="app">
+  <textarea id="question" placeholder="Ask your legal question..."></textarea>
+  <br>
+  <button onclick="askAI()">Ask AI</button>
+
+  <div id="chat"></div>
 </div>
 
 <script>
+const legalKnowledge = {
+  "divorce": "Divorce requires a legal petition, notice to spouse, and court proceedings.",
+  "contract": "A valid contract requires offer, acceptance, consideration, and lawful purpose.",
+  "theft": "Theft is unlawful taking of property with intent to deprive the owner.",
+  "fraud": "Fraud involves intentional deception for personal gain.",
+  "cyber": "Cyber crimes include hacking, identity theft, and data breaches."
+};
+
 function askAI() {
   let q = document.getElementById("question").value;
-  let messages = document.getElementById("messages");
-
+  let chat = document.getElementById("chat");
   if (q.trim() === "") return;
 
-  messages.innerHTML += "<p class='user'><b>You:</b> " + q + "</p>";
+  chat.innerHTML += "<p class='user'><b>You:</b> " + q + "</p>";
 
-  let answer = "";
+  let answer = generateLegalAnswer(q);
 
-  if (q.toLowerCase().includes("divorce")) {
-    answer = "Divorce laws differ by country. Usually a legal petition and court approval is required.";
-  }
-  else if (q.toLowerCase().includes("contract")) {
-    answer = "A contract is valid if it has offer, acceptance, consideration, and legal purpose.";
-  }
-  else if (q.toLowerCase().includes("theft")) {
-    answer = "Theft is a criminal offense. Punishment depends on local law and severity.";
-  }
-  else {
-    answer = "This is a demo legal assistant. For real cases, consult a qualified lawyer.";
-  }
+  chat.innerHTML += "<p class='ai'><b>AI:</b> " + answer + "</p>";
+  chat.innerHTML += "<p class='system'><i>Disclaimer: This is not legal advice.</i></p>";
 
-  messages.innerHTML += "<p class='ai'><b>AI:</b> " + answer + "</p>";
   document.getElementById("question").value = "";
 }
+
+function generateLegalAnswer(question) {
+  let q = question.toLowerCase();
+
+  for (let key in legalKnowledge) {
+    if (q.includes(key)) {
+      return legalKnowledge[key];
+    }
+  }
+
+  return "Based on general legal principles, you should consult a licensed lawyer for accurate guidance.";
+}
+
+/* ===== REAL AI UPGRADE READY =====
+When you get backend later, replace generateLegalAnswer()
+with fetch() to AI API.
+No frontend rewrite needed.
+================================= */
 </script>
 
 </body>
