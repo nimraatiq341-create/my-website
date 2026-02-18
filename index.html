@@ -1,31 +1,81 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Nimra's Website</title>
+  <title>AI Legal Helper</title>
+  <meta charset="UTF-8">
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f5f7fa;
+      background: #eef2f5;
       text-align: center;
-      padding-top: 50px;
+      padding: 40px;
+    }
+    #chatbox {
+      width: 420px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     h1 { color: #2c3e50; }
-    a {
-      display: inline-block;
-      margin: 10px;
+    input {
+      width: 80%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 15px;
+      background: #2c7be5;
       color: white;
-      background: #3498db;
-      padding: 10px 20px;
-      text-decoration: none;
+      border: none;
+      cursor: pointer;
       border-radius: 5px;
     }
+    .user { color: #2c7be5; text-align: left; }
+    .ai { color: #27ae60; text-align: left; }
   </style>
 </head>
-<body>
-  <h1>Welcome to my website</h1>
-  <p>This is my first website on GitHub Pages.</p>
 
-  <a href="about.html">About Me</a>
-  <a href="projects.html">My Projects</a>
+<body>
+
+<h1>AI Legal Helper</h1>
+<p>Ask your legal question below</p>
+
+<div id="chatbox">
+  <div id="messages"></div>
+  <input id="question" placeholder="Type your legal question here">
+  <button onclick="askAI()">Ask</button>
+</div>
+
+<script>
+function askAI() {
+  let q = document.getElementById("question").value;
+  let messages = document.getElementById("messages");
+
+  if (q.trim() === "") return;
+
+  messages.innerHTML += "<p class='user'><b>You:</b> " + q + "</p>";
+
+  let answer = "";
+
+  if (q.toLowerCase().includes("divorce")) {
+    answer = "Divorce laws differ by country. Usually a legal petition and court approval is required.";
+  }
+  else if (q.toLowerCase().includes("contract")) {
+    answer = "A contract is valid if it has offer, acceptance, consideration, and legal purpose.";
+  }
+  else if (q.toLowerCase().includes("theft")) {
+    answer = "Theft is a criminal offense. Punishment depends on local law and severity.";
+  }
+  else {
+    answer = "This is a demo legal assistant. For real cases, consult a qualified lawyer.";
+  }
+
+  messages.innerHTML += "<p class='ai'><b>AI:</b> " + answer + "</p>";
+  document.getElementById("question").value = "";
+}
+</script>
+
 </body>
 </html>
